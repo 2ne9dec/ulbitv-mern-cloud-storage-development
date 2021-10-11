@@ -1,0 +1,41 @@
+.navbar {
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  background-color: white;
+  width: 100%;
+
+  &__header {
+    margin-left: 10px;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  &__login {
+    margin-left: auto;
+    margin-right: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease 0s;
+    &:hover {
+      color: rgb(10, 16, 77);
+    }
+  }
+
+  &__search {
+    width: 200px;
+    margin-left: 30px;
+  }
+
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.container {
+  width: 1140px;
+  display: flex;
+  align-items: center;
+}

@@ -1,0 +1,7 @@
+{
+  "serverPort": 5000,
+  "dbUrl": "mongodb+srv://2ne9dec:Undisturbed1@cloud.qzw0y.mongodb.net/cloud?retryWrites=true&w=majority",
+  "secretKey": "jwtSecret",
+  "filePath": "c:/Projects/ulbitv-mern-cloud-storage-development/server/files/",
+  "staticPath": "c:/Projects/ulbitv-mern-cloud-storage-development/server/static/"
+}
