@@ -13,10 +13,10 @@ class FileController {
       const parentFile = await File.findOne({ _id: parent });
       if (!parentFile) {
         file.path = name;
-        await fileService.createDir(req, file);
+        await fileService.createDir(file);
       } else {
         file.path = `${parentFile.path}/${file.name}`;
-        await fileService.createDir(req, file);
+        await fileService.createDir(file);
         parentFile.childs.push(file._id);
         await parentFile.save();
       }
@@ -72,9 +72,9 @@ class FileController {
       user.usedSpace = user.usedSpace + file.size;
       let path;
       if (parent) {
-        path = `${req.filePath}/${user._id}/${parent.path}/${file.name}`;
+        path = `${config.get('filePath')}/${user._id}/${parent.path}/${file.name}`;
       } else {
-        path = `${req.filePath}/${user._id}/${file.name}`;
+        path = `${config.get('filePath')}/${user._id}/${file.name}`;
       }
       if (fs.existsSync(path)) {
         return res.status(400).json({ message: 'File already exist' });
@@ -90,7 +90,7 @@ class FileController {
         type,
         size: file.size,
         path: filePath,
-        parent: parent ? parent._id : null,
+        parent: parent?._id,
         user: user.id,
       });
       await dbFile.save();
@@ -105,7 +105,7 @@ class FileController {
   async downloadFile(req, res) {
     try {
       const file = await File.findOne({ _id: req.query.id, user: req.user.id });
-      const path = fileService.getPath(req, file);
+      const path = fileService.getPath(file);
       if (fs.existsSync(path)) {
         return res.download(path, file.name);
       }
@@ -122,7 +122,7 @@ class FileController {
       if (!file) {
         return res.status(400).json({ message: 'File not found' });
       }
-      fileService.deleteFile(req, file);
+      fileService.deleteFile(file);
       await file.remove();
       return res.json({ message: 'File was deleted' });
     } catch (e) {
